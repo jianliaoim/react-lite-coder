@@ -1,0 +1,54 @@
+{
+  "name": "react-lite-coder",
+  "version": "0.0.1",
+  "description": "Code Editor and Code Viewer for Jianliao.com",
+  "main": "lib/index.js",
+  "dependencies": {
+    "codemirror": "^5.4.0",
+    "highlight.js": "^8.6.0",
+    "react": "^0.13.3"
+  },
+  "devDependencies": {
+    "babel-core": "^5.6.20",
+    "babel-loader": "^5.3.1",
+    "cirru-script": "^0.2.3",
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.9.3",
+    "css-loader": "^0.15.3",
+    "del": "^1.2.0",
+    "file-loader": "^0.8.4",
+    "gulp": "^3.9.0",
+    "gulp-coffee": "^2.3.1",
+    "less": "^2.5.1",
+    "less-loader": "^2.2.0",
+    "node-libs-browser": "^0.5.2",
+    "rsyncwrapper": "^0.4.3",
+    "run-sequence": "^1.1.1",
+    "stir-template": "^0.1.4",
+    "style-loader": "^0.12.3",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.10.1",
+    "webpack-dev-server": "^1.10.1"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "dev": "webpack-dev-server --hot",
+    "publish": "gulp rsync",
+    "script": "gulp script"
+  },
+  "keywords": [
+    "react-component",
+    "code-editor",
+    "code-viewer"
+  ],
+  "author": "Teambition",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/teambition/react-lite-coder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/teambition/react-lite-coder/issues"
+  },
+  "homepage": "https://github.com/teambition/react-lite-coder"
+}
