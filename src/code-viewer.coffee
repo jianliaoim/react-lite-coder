@@ -7,7 +7,9 @@ require 'highlight.js/styles/default.css'
 
 code = React.createFactory 'code'
 div = React.createFactory 'div'
+option = React.createFactory 'option'
 pre = React.createFactory 'pre'
+select = React.createFactory 'select'
 
 module.exports = React.createClass
   displayName: 'lite-code-viewer'
@@ -24,6 +26,9 @@ module.exports = React.createClass
     if codes.length?
       _.forEach codes, (code) ->
         hljs.highlightBlock(code)
+
+  renderSelector: ->
+    
 
   render: ->
     className = "lite-code-viewer is-for-#{@props.name}"

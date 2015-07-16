@@ -1,82 +1,70 @@
 _ = require 'lodash'
+cx = require 'classnames'
 CodeMirror = require 'codemirror'
 React = require 'react'
-
-# theme
-require 'codemirror/lib/codemirror.css'
-
-# mode
-configs = require './config'
-_.forEach configs, (value, index) ->
-  key = value.key
-  require "codemirror/mode/#{key}/#{key}.js"
 
 T = React.PropTypes
 
 div = React.createFactory 'div'
-option = React.createFactory 'option'
-select = React.createFactory 'select'
 textarea = React.createFactory 'textarea'
 
 module.exports = React.createClass
   displayName: 'lite-code-editor'
 
   propTypes:
+    readOnly:     T.bool
+    option:       T.object
     defaultValue: T.string
-    mode: T.string
-    name: T.string
-    readOnly: T.bool
-    value: T.string
-    onChange: T.func
+    mode:         T.string
+    name:         T.string
+    theme:        T.string
+    onChange:     T.func
 
-  getInitialState: ->
-    config:
-      lineNumbers: true
-      mode: @props.mode or 'null'
-      theme: 'default'
+  getDefaultProps: ->
+    mode:     'null'
+    readOnly: false
+    theme:    'default'
+    option:
+      indentUnit:     2
+      indentWithTabs: true
+      lineNumbers:    true
+      lineWrapping:   true
+      placeholder:    'Code goes here...'
+      smartIndent:    true
+      tabSize:        2
 
   componentDidMount: ->
     editor = @refs.editor.getDOMNode()
-    @editor = CodeMirror.fromTextArea editor, @state.config
+    option = _.assign {},
+      @props.option,
+      { mode: @props.mode },
+      { readOnly: @props.readOnly },
+      { theme: @props.theme }
+
+    @editor = CodeMirror.fromTextArea editor, option
     @editor.on 'change', @onEditorChange
 
-  componentDidUpdate: ->
-    # if @editor?
-    #   if @props.value?
-    #     if @editor.getValue() isnt @props.value
-    #       @editor.setValue @props.value
+  componentWillReceiveProps: (nextProps) ->
+    if @editor.getOption('mode') isnt nextProps.mode
+      @editor.setOption 'mode', nextProps.mode
 
   onEditorChange: ->
     value = @editor.getValue()
     @props.onChange value
 
-  onSelectorChange: (event) ->
-    mode = event.target.value
-    @editor.setOption 'mode', mode
-    @setState
-      config:
-        mode: event.target.value
-
   renderEditor: ->
     textarea
-      className: 'editor'
+      className:    'editor'
+      ref:          'editor'
+      readOnly:     @props.readOnly
       defaultValue: @props.defaultValue
-      onChange: @props.onChange
-      readOnly: @props.readOnly
-      ref: 'editor'
-      value: @props.value
+      placeholder:  @props.placeholder
+      onChange:     @props.onChange
 
-  renderSelector: ->
-    options = _.map configs, (config, index) ->
-      option key: index, value: config.key, config.name
-
-    select className: 'editor-mode', onChange: @onSelectorChange, value: @state.config.mode,
-      option value: 'null', 'Text'
-      options
 
   render: ->
-    className = "lite-code-editor is-for-#{@props.name}"
+    className = cx 'lite-code-editor',
+      "is-for-#{@props.name}": @props.name?
 
     div className: className,
       @renderEditor()
-      @renderSelector()
