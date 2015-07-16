@@ -43,7 +43,7 @@ gulp.task 'html', (cb) ->
 
 gulp.task 'del', (cb) ->
   del = require('del')
-  del [ 'build' ], cb
+  del [ 'lib', 'build' ], cb
 
 gulp.task 'webpack', (cb) ->
   if env.dev
@@ -57,4 +57,4 @@ gulp.task 'webpack', (cb) ->
 
 gulp.task 'build', (cb) ->
   env.dev = false
-  sequence 'del', 'webpack', 'html', cb
+  sequence 'del', 'webpack', 'html', 'script', cb
