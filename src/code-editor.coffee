@@ -24,7 +24,7 @@ module.exports = React.createClass
     mode:     'null'
     readOnly: false
     theme:    'default'
-    option:
+    defaultOption:
       indentUnit:     2
       indentWithTabs: true
       lineNumbers:    true
@@ -36,10 +36,11 @@ module.exports = React.createClass
   componentDidMount: ->
     editor = @refs.editor.getDOMNode()
     option = _.assign {},
+      @props.defaultOption,
       @props.option,
       { mode: @props.mode },
       { readOnly: @props.readOnly },
-      { theme: @props.theme }
+      { theme: @props.theme },
 
     @editor = CodeMirror.fromTextArea editor, option
     @editor.on 'change', @onEditorChange

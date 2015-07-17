@@ -1,18 +1,23 @@
 _ = require 'lodash'
-hljs = require 'highlight.js'
+cx = require 'classnames'
+hljs = require 'highlight.js/lib/highlight'
 React = require 'react'
 
-# theme
-require 'highlight.js/styles/default.css'
+T = React.PropTypes
 
 code = React.createFactory 'code'
 div = React.createFactory 'div'
-option = React.createFactory 'option'
 pre = React.createFactory 'pre'
-select = React.createFactory 'select'
 
 module.exports = React.createClass
   displayName: 'lite-code-viewer'
+
+  propTypes:
+    mode: T.string
+    name: T.string
+
+  getDefaultProps: ->
+    mode: 'nohighlight'
 
   componentDidMount: ->
     @highlightCode()
@@ -27,12 +32,10 @@ module.exports = React.createClass
       _.forEach codes, (code) ->
         hljs.highlightBlock(code)
 
-  renderSelector: ->
-    
-
   render: ->
-    className = "lite-code-viewer is-for-#{@props.name}"
+    className = cx 'lite-code-viewer',
+      "is-for-#{@props.name}": @props.name?
 
     div className: className, ref: 'highlighter',
-      pre null,
+      pre className: 'pre',
         code className: @props.mode, @props.children
