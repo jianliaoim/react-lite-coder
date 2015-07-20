@@ -26,14 +26,16 @@ module.exports = React.createClass
     @highlightCode()
 
   highlightCode: ->
-    highlighter = @refs.highlighter.getDOMNode()
-    codes = highlighter.querySelectorAll 'pre code'
-    if codes.length?
-      _.forEach codes, (code) ->
-        hljs.highlightBlock(code)
+    if @props.mode isnt 'nohighlight'
+      highlighter = @refs.highlighter.getDOMNode()
+      codes = highlighter.querySelectorAll 'pre code'
+      if codes.length?
+        _.forEach codes, (code) ->
+          hljs.highlightBlock(code)
 
   render: ->
-    className = cx 'lite-code-viewer',
+    className = cx
+      'lite-code-viewer': true
       "is-for-#{@props.name}": @props.name?
 
     div className: className, ref: 'highlighter',
