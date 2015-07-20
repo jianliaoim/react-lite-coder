@@ -12,34 +12,36 @@ module.exports = React.createClass
   displayName: 'lite-code-editor'
 
   propTypes:
-    readOnly:     T.bool
-    option:       T.object
-    defaultValue: T.string
-    mode:         T.string
-    name:         T.string
-    theme:        T.string
-    onChange:     T.func
+    readOnly:      T.bool
+    option:        T.object
+    defaultValue:  T.string
+    mode:          T.string
+    name:          T.string
+    theme:         T.string
+    onChange:      T.func.isRequired
 
   getDefaultProps: ->
     mode:     'null'
     readOnly: false
     theme:    'default'
-    option:
+
+  componentDidMount: ->
+    defaultOption =
       indentUnit:     2
       indentWithTabs: true
       lineNumbers:    true
-      lineWrapping:   true
+      lineWrapping:   false
       placeholder:    'Code goes here...'
       smartIndent:    true
       tabSize:        2
 
-  componentDidMount: ->
     editor = @refs.editor.getDOMNode()
     option = _.assign {},
+      defaultOption,
       @props.option,
-      { mode: @props.mode },
-      { readOnly: @props.readOnly },
-      { theme: @props.theme }
+        mode:     @props.mode
+        readOnly: @props.readOnly
+        theme:    @props.theme
 
     @editor = CodeMirror.fromTextArea editor, option
     @editor.on 'change', @onEditorChange
@@ -60,7 +62,6 @@ module.exports = React.createClass
       defaultValue: @props.defaultValue
       placeholder:  @props.placeholder
       onChange:     @props.onChange
-
 
   render: ->
     className = cx 'lite-code-editor',
