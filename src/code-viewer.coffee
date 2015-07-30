@@ -39,6 +39,11 @@ module.exports = React.createClass
       'lite-code-viewer': true
       "is-for-#{@props.name}": @props.name?
 
+    if @props.children?
+      content = @props.children
+    else
+      content = @props.content
+
     div className: className, ref: 'highlighter',
       pre,
-        code className: @props.mode, @props.content
+        code className: @props.mode, content
