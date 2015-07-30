@@ -23,7 +23,7 @@ var
           object (:class :intro)
           div
             object (:class :title)
-            , ":This is a example of React Lite Coder."
+            , ":Code Editor and Code Viewer of jianliao.com"
           div null
             span null ":Read more at "
             a
@@ -31,4 +31,4 @@ var
               , :github.com/teambition/react-lite-coder
             span null :.
         div
-          object (:class :example)
+          object (:id :app)

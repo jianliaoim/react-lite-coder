@@ -1,4 +1,4 @@
-require './example.less'
+require './demo.less'
 
 _ = require 'lodash'
 React = require 'react'
@@ -13,8 +13,8 @@ Highlight.registerLanguage('css', require('highlight.js/lib/languages/css'));
 Highlight.registerLanguage('html', require('highlight.js/lib/languages/xml'));
 Highlight.registerLanguage('javascript', require('highlight.js/lib/languages/javascript'));
 
-LiteCodeEditor = React.createFactory require('../code-editor')
-LiteCodeViewer = React.createFactory require('../code-viewer')
+LiteCodeEditor = React.createFactory require('../src/index').CodeEditor
+LiteCodeViewer = React.createFactory require('../src/index').CodeViewer
 
 div    = React.createFactory 'div'
 option = React.createFactory 'option'
@@ -30,7 +30,7 @@ configs = [
 ]
 
 App = React.createClass
-  displayName: 'example'
+  displayName: 'app'
 
   getInitialState: ->
     src:  """
@@ -84,6 +84,7 @@ App = React.createClass
       p null, 'Code Viewer'
       @renderViewer()
 
-PageApp = React.createFactory App
+root  = React.createFactory App
+mount = document.getElementById('app')
 
-React.render PageApp(), document.querySelector('.example')
+React.render root(), mount

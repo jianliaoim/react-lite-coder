@@ -1,0 +1,98 @@
+// reset
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:'';content:none}table{border-collapse:collapse;border-spacing:0}a{text-decoration:none}
+
+// var
+
+@font-family: Roboto, "Helvetica Neue", "Hiragino Sans GB", "Microsoft Yahei", "WenQuanYi Micro Hei", sans-serif;
+
+// common
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: @font-family;
+  font-size: 16px;
+  line-height: 1.618;
+}
+
+a {
+  padding: 0 5px;
+  color: inherit;
+  text-decoration: underline;
+
+  &:hover {
+    background: @bg-link;
+    color: @color-link;
+  }
+}
+
+.intro {
+  padding: 20px 0;
+  text-align: center;
+
+  .title {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}
+
+.app {
+
+  .selector {
+    margin-bottom: 20px;
+    text-align: center;
+
+    select {
+      display: inline-block;
+      background: #fff;
+      border: 1px solid #eee;
+      color: #999;
+      cursor: pointer;
+      font-size: 20px;
+
+      &:hover {
+        border-color: #ccc;
+      }
+    }
+  }
+
+  .editor {
+    margin-bottom: 20px;
+    background: #f9f9f9;
+
+    .CodeMirror {
+      height: auto;
+      background: transparent;
+    }
+  }
+
+  .viewer {
+    padding-left: 30px;
+    background: #f9f9f9;
+
+    pre {
+      margin: 0;
+    }
+
+    .hljs,
+    .nohighlight {
+      display: block;
+      padding: 0.5em;
+      background: transparent;
+      color: #333;
+    }
+  }
+}
+
+@import "~codemirror/lib/codemirror.css";
+@import "~highlight.js/styles/github.css";
