@@ -1,7 +1,7 @@
-_ = require 'lodash'
 cx = require 'classnames'
 CodeMirror = require 'codemirror'
 React = require 'react'
+oa = require 'object-assign'
 
 T = React.PropTypes
 
@@ -36,7 +36,7 @@ module.exports = React.createClass
       tabSize:        2
 
     editor = @refs.editor.getDOMNode()
-    option = _.assign {},
+    option = oa {},
       defaultOption,
       @props.option,
         mode:     @props.mode
@@ -64,7 +64,8 @@ module.exports = React.createClass
       onChange:     @props.onChange
 
   render: ->
-    className = cx 'lite-code-editor',
+    className = cx
+      'lite-code-editor': true
       "is-for-#{@props.name}": @props.name?
 
     div className: className,
