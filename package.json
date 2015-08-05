@@ -36,7 +36,7 @@
     "webpack-dev-server": "^1.10.1"
   },
   "scripts": {
-    "build": "gulp build && gulp script",
+    "build": "gulp script && gulp build",
     "dev": "gulp html && webpack-dev-server --hot"
   },
   "keywords": [

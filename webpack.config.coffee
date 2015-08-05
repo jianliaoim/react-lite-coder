@@ -1,9 +1,13 @@
+webpack = require 'webpack'
+
 module.exports =
   entry:
-    main: [
+    vendor: [
       'webpack-dev-server/client?http://0.0.0.0:8080'
       'webpack/hot/dev-server'
-      './src/example/main'
+    ]
+    main: [
+      './example/main'
     ]
   output:
     path: 'build/'
@@ -12,9 +16,10 @@ module.exports =
   resolve: extensions: ['.js', '.coffee', '']
   module:
     loaders: [
-      {test: /\.jsx$/, exclude: /node_modules/, loader: 'babel-loader'}
       {test: /\.coffee$/, loader: 'coffee'}
-      {test: /\.css$/, loader: 'style!css'}
       {test: /\.less$/, loader: 'style!css!less'}
+      {test: /\.css$/, loader: 'style!css!autoprefixer'}
     ]
-  plugins: []
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin 'vendor', 'vendor.js'
+  ]

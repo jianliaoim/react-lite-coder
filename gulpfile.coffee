@@ -1,18 +1,18 @@
-'use strict'
-
-gulp = require('gulp')
-sequence = require('run-sequence')
 exec = require('child_process').exec
+gulp = require 'gulp'
+sequence = require 'run-sequence'
+
 env =
   dev: true
   main: 'http://localhost:8080/build/main.js'
+  vendor: 'http://localhost:8080/build/vendor.js'
 
 gulp.task 'script', ->
-  coffee = require('gulp-coffee')
+  coffee = require 'gulp-coffee'
   gulp
   .src 'src/*.coffee'
   .pipe coffee()
-  .pipe gulp.dest('lib/')
+  .pipe gulp.dest 'lib/'
 
 gulp.task 'rsync', (cb) ->
   wrapper = require 'rsyncwrapper'
@@ -31,19 +31,21 @@ gulp.task 'rsync', (cb) ->
     cb()
 
 gulp.task 'html', (cb) ->
-  require('cirru-script/lib/register')
-  html = require('./template.cirru')
-  fs = require('fs')
+  require 'cirru-script/lib/register'
+  html = require './template.cirru'
+  fs = require 'fs'
   assets = undefined
   unless env.dev
-    assets = require('./build/assets.json')
-    env.main = './build/' + assets.main
+    assets = require './build/assets.json'
+    env.main = './build/' + assets.main[0]
+    env.vendor = './build/' + assets.vendor
+    env.style = './build/' + assets.main[1]
 
   fs.writeFile 'index.html', html(env), cb
 
 gulp.task 'del', (cb) ->
-  del = require('del')
-  del [ 'lib', 'build' ], cb
+  del = require 'del'
+  del ['build', 'lib'], cb
 
 gulp.task 'webpack', (cb) ->
   if env.dev
@@ -57,4 +59,4 @@ gulp.task 'webpack', (cb) ->
 
 gulp.task 'build', (cb) ->
   env.dev = false
-  sequence 'del', 'webpack', 'html', 'script', cb
+  sequence 'del', 'webpack', 'html', cb

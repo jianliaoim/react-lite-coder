@@ -1,10 +1,12 @@
-webpack = require('webpack')
-config = require('./webpack.config')
-fs = require('fs')
+config = require './webpack.config'
+extract = require 'extract-text-webpack-plugin'
+fs = require 'fs'
+webpack = require 'webpack'
 
 module.exports =
   entry:
-    main: [ './src/example/main' ]
+    vendor: []
+    main: ['./example/main', './example/main.css']
   output:
     path: 'build/'
     filename: '[name].[chunkhash:8].js'
@@ -12,7 +14,9 @@ module.exports =
   resolve: config.resolve
   module: config.module
   plugins: [
-    new webpack.optimize.UglifyJsPlugin sourceMap: false
+    new webpack.optimize.CommonsChunkPlugin 'vendor', 'vendor.[chunkhash:8].js'
+    new (webpack.optimize.UglifyJsPlugin)(sourceMap: false)
+    new extract("style.[chunkhash:8].css")
     ->
       @plugin 'done', (stats) ->
         content = JSON.stringify(stats.toJson().assetsByChunkName, null, 2)
