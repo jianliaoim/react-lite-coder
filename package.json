@@ -11,13 +11,15 @@
     "react": "^0.13.3"
   },
   "devDependencies": {
-    "babel-core": "^5.8.19",
+    "autoprefixer-loader": "^2.0.0",
+    "babel-core": "^5.8.20",
     "babel-loader": "^5.3.2",
     "cirru-script": "^0.2.3",
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.9.3",
     "css-loader": "^0.15.6",
     "del": "^1.2.0",
+    "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
     "gulp": "^3.9.0",
     "gulp-coffee": "^2.3.1",
@@ -29,6 +31,7 @@
     "stir-template": "^0.1.4",
     "style-loader": "^0.12.3",
     "url-loader": "^0.5.6",
+    "volubile-ui": "0.0.10",
     "webpack": "^1.10.5",
     "webpack-dev-server": "^1.10.1"
   },
@@ -40,7 +43,9 @@
     "code-editor",
     "code-viewer",
     "react",
-    "react-lite"
+    "react-component",
+    "react-lite",
+    "teambition"
   ],
   "author": "Teambition",
   "license": "MIT",
