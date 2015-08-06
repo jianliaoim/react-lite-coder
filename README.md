@@ -3,7 +3,7 @@ React Lite Coder
 
 Code Editor and Code Viewer of jianliao.com
 
-Demo http://ui.talk.ai/react-lite-audio/
+Demo http://ui.talk.ai/react-lite-coder/
 
 ### Usage
 
