@@ -7,7 +7,6 @@
     "classnames": "^2.1.3",
     "codemirror": "^5.5.0",
     "highlight.js": "^8.7.0",
-    "object-assign": "^3.0.0",
     "react": "^0.13.3"
   },
   "devDependencies": {
@@ -36,7 +35,7 @@
     "webpack-dev-server": "^1.10.1"
   },
   "scripts": {
-    "build": "gulp script && gulp build",
+    "build": "gulp build && gulp script",
     "dev": "gulp html && webpack-dev-server --hot"
   },
   "keywords": [
