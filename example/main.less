@@ -1,5 +1,27 @@
-@import './reset';
-@import './var';
-@import './common';
+@import "./reset";
+@import "./var";
+@import "./common";
 
 // example
+.section {
+
+  .title {
+    margin-bottom: 15px;
+
+    border-bottom: 1px solid #ccc;
+
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 40px;
+  }
+
+  + .section {
+    margin-top: 30px;
+  }
+
+}
+
+
+// style
+
+@import "../src/index.less";

@@ -1,54 +1,53 @@
 cx = require 'classnames'
-CodeMirror = require 'codemirror'
 React = require 'react'
-oa = require 'object-assign'
 
-T = React.PropTypes
+CodeMirror = require 'codemirror'
+require 'codemirror/addon/display/placeholder'
 
 div = React.createFactory 'div'
 textarea = React.createFactory 'textarea'
+
+T = React.PropTypes
 
 module.exports = React.createClass
   displayName: 'lite-code-editor'
 
   propTypes:
-    readOnly:      T.bool
-    option:        T.object
-    defaultValue:  T.string
-    mode:          T.string
-    name:          T.string
-    theme:         T.string
-    onChange:      T.func.isRequired
+    onChange: T.func.isRequired
+    codeType: T.string
+    name: T.string
+    placeholder: T.string
+    text: T.string
 
   getDefaultProps: ->
-    mode:     'null'
+    codeType: 'null'
+    placeholder: 'Code goes here...'
     readOnly: false
-    theme:    'default'
+    text: ''
 
   componentDidMount: ->
-    defaultOption =
-      indentUnit:     2
-      indentWithTabs: true
-      lineNumbers:    true
-      lineWrapping:   false
-      placeholder:    'Code goes here...'
-      smartIndent:    true
-      tabSize:        2
-
+    @option =
+      indentUnit: 2
+      indentWithTabs: false
+      lineNumbers: true
+      lineWrapping: false
+      mode: @props.codeType
+      placeholder: @props.placeholder
+      readOnly: @props.readOnly
+      smartIndent: true
+      tabMode: 'spaces'
+      tabSize: 2
+      theme: 'default'
+      extraKeys:
+        'Tab': (cm) ->
+          cm.replaceSelection '  ', 'end'
     editor = @refs.editor.getDOMNode()
-    option = oa {},
-      defaultOption,
-      @props.option,
-        mode:     @props.mode
-        readOnly: @props.readOnly
-        theme:    @props.theme
-
-    @editor = CodeMirror.fromTextArea editor, option
+    @editor = CodeMirror.fromTextArea editor, @option
     @editor.on 'change', @onEditorChange
 
   componentWillReceiveProps: (nextProps) ->
-    if @editor.getOption('mode') isnt nextProps.mode
-      @editor.setOption 'mode', nextProps.mode
+    if @editor.getOption 'mode' isnt nextProps.codeType
+      @editor.setOption 'mode', nextProps.codeType
 
   onEditorChange: ->
     value = @editor.getValue()
@@ -56,17 +55,16 @@ module.exports = React.createClass
 
   renderEditor: ->
     textarea
-      className:    'editor'
-      ref:          'editor'
-      readOnly:     @props.readOnly
-      defaultValue: @props.defaultValue
-      placeholder:  @props.placeholder
-      onChange:     @props.onChange
+      className: 'editor'
+      defaultValue: @props.text
+      readOnly: @props.readOnly
+      ref: 'editor'
+      onChange: @props.onChange
 
   render: ->
     className = cx
       'lite-code-editor': true
-      "is-for-#{@props.name}": @props.name?
+      "is-for-#{ @props.name }": @props.name?
 
     div className: className,
       @renderEditor()

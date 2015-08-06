@@ -2,23 +2,23 @@ cx = require 'classnames'
 hljs = require 'highlight.js/lib/highlight'
 React = require 'react'
 
-T = React.PropTypes
-
 code = React.createFactory 'code'
 div = React.createFactory 'div'
 pre = React.createFactory 'pre'
+
+T = React.PropTypes
 
 module.exports = React.createClass
   displayName: 'lite-code-viewer'
 
   propTypes:
-    content: T.string
-    mode:    T.string
-    name:    T.string
+    codeType: T.string
+    name: T.string
+    text: T.string
 
   getDefaultProps: ->
-    content: ''
-    mode:    'nohighlight'
+    codeType: 'nohighlight'
+    text: ''
 
   componentDidMount: ->
     @highlightCode()
@@ -27,23 +27,19 @@ module.exports = React.createClass
     @highlightCode()
 
   highlightCode: ->
-    if @props.mode isnt 'nohighlight'
-      highlighter = @refs.highlighter.getDOMNode()
-      codes = highlighter.querySelectorAll 'pre code'
-      if codes?.length
-        codes.forEach (code) ->
-          hljs.highlightBlock(code)
+    return if @props.codeType is 'nohighlight'
+
+    viewer = @refs.viewer.getDOMNode()
+    codes = viewer.querySelectorAll 'pre code'
+    if codes?.length
+      [].forEach.call codes, (code) ->
+        hljs.highlightBlock code
 
   render: ->
     className = cx
       'lite-code-viewer': true
-      "is-for-#{@props.name}": @props.name?
+      "is-for-#{ @props.name }": @props.name?
 
-    if @props.children?
-      content = @props.children
-    else
-      content = @props.content
-
-    div className: className, ref: 'highlighter',
-      pre,
-        code className: @props.mode, content
+    div className: className, ref: 'viewer',
+      pre null,
+        code className: @props.codeType, @props.text
