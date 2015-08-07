@@ -21,19 +21,21 @@ module.exports = React.createClass
     text: ''
 
   componentDidMount: ->
+    @highlightConfig()
     @highlightCode()
 
   componentDidUpdate: ->
     @highlightCode()
 
+  highlightConfig: ->
+    hljs.configure
+      tabReplace: '  '
+
   highlightCode: ->
     return if @props.codeType is 'nohighlight'
-
     viewer = @refs.viewer.getDOMNode()
-    codes = viewer.querySelectorAll 'pre code'
-    if codes?.length
-      [].forEach.call codes, (code) ->
-        hljs.highlightBlock code
+    snippets = viewer.querySelectorAll 'pre code'
+    hljs.highlightBlock snippet for snippet in snippets
 
   render: ->
     className = cx

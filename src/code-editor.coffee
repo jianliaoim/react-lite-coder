@@ -1,7 +1,7 @@
 cx = require 'classnames'
+codemirror = require 'codemirror'
 React = require 'react'
 
-CodeMirror = require 'codemirror'
 require 'codemirror/addon/display/placeholder'
 
 div = React.createFactory 'div'
@@ -13,6 +13,7 @@ module.exports = React.createClass
   displayName: 'lite-code-editor'
 
   propTypes:
+    readOnly: T.bool
     onChange: T.func.isRequired
     codeType: T.string
     name: T.string
@@ -26,6 +27,13 @@ module.exports = React.createClass
     text: ''
 
   componentDidMount: ->
+    @initEditor()
+
+  componentWillReceiveProps: (nextProps) ->
+    if @editor.getOption('mode') isnt nextProps.codeType
+      @editor.setOption 'mode', nextProps.codeType
+
+  initEditor: ->
     @option =
       indentUnit: 2
       indentWithTabs: false
@@ -42,12 +50,8 @@ module.exports = React.createClass
         'Tab': (cm) ->
           cm.replaceSelection '  ', 'end'
     editor = @refs.editor.getDOMNode()
-    @editor = CodeMirror.fromTextArea editor, @option
+    @editor = codemirror.fromTextArea editor, @option
     @editor.on 'change', @onEditorChange
-
-  componentWillReceiveProps: (nextProps) ->
-    if @editor.getOption 'mode' isnt nextProps.codeType
-      @editor.setOption 'mode', nextProps.codeType
 
   onEditorChange: ->
     value = @editor.getValue()
