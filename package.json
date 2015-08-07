@@ -1,6 +1,6 @@
 {
   "name": "react-lite-coder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Code Editor and Code Viewer of Jianliao.com",
   "main": "lib/index.js",
   "dependencies": {
