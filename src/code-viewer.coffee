@@ -1,6 +1,6 @@
 cx = require 'classnames'
 hljs = require 'highlight.js/lib/highlight'
-React = require 'react'
+React = require 'react/addons'
 
 code = React.createFactory 'code'
 div = React.createFactory 'div'
@@ -8,8 +8,12 @@ pre = React.createFactory 'pre'
 
 T = React.PropTypes
 
+hljs.configure tabReplace: '  '
+lengthLimit = 100 * 1000
+
 module.exports = React.createClass
   displayName: 'lite-code-viewer'
+  mixins: [React.addons.PureRenderMixin]
 
   propTypes:
     codeType: T.string
@@ -20,22 +24,8 @@ module.exports = React.createClass
     codeType: 'nohighlight'
     text: ''
 
-  componentDidMount: ->
-    @highlightConfig()
-    @highlightCode()
-
-  componentDidUpdate: ->
-    @highlightCode()
-
-  highlightConfig: ->
-    hljs.configure
-      tabReplace: '  '
-
-  highlightCode: ->
-    return if @props.codeType is 'nohighlight'
-    viewer = @refs.viewer.getDOMNode()
-    snippets = viewer.querySelectorAll 'pre code'
-    hljs.highlightBlock snippet for snippet in snippets
+  renderCode: ->
+    hljs.highlightAuto(@props.text, [@props.codeType]).value
 
   render: ->
     className = cx
@@ -44,4 +34,9 @@ module.exports = React.createClass
 
     div className: className, ref: 'viewer',
       pre null,
-        code className: @props.codeType, @props.text
+        if @props.text.length > lengthLimit
+          code className: @props.codeType, @props.text
+        else
+          code
+            className: @props.codeType
+            dangerouslySetInnerHTML: __html: @renderCode()

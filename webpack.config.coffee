@@ -16,7 +16,7 @@ module.exports =
   resolve: extensions: ['.js', '.coffee', '']
   module:
     loaders: [
-      {test: /\.coffee$/, loader: 'coffee'}
+      {test: /\.coffee$/, loader: 'react-hot!coffee'}
       {test: /\.less$/, loader: 'style!css!less'}
       {test: /\.css$/, loader: 'style!css!autoprefixer'}
     ]
