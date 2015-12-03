@@ -1,8 +1,9 @@
 cx = require 'classnames'
-codemirror = require 'codemirror'
 React = require 'react'
 
-require 'codemirror/addon/display/placeholder'
+if typeof window isnt 'undefined'
+  codemirror = require 'codemirror'
+  require 'codemirror/addon/display/placeholder'
 
 div = React.createFactory 'div'
 textarea = React.createFactory 'textarea'
