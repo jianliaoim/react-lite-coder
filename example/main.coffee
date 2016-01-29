@@ -3,6 +3,7 @@ require './main.less'
 codemirror = require 'codemirror'
 hljs = require 'highlight.js/lib/highlight'
 React = require 'react'
+ReactDOM = require 'react-dom'
 
 LiteCodeEditor = React.createFactory require('../src/index').CodeEditor
 LiteCodeViewer = React.createFactory require('../src/index').CodeViewer
@@ -91,4 +92,4 @@ App = React.createClass
 root  = React.createFactory App
 mount = document.getElementById('example')
 
-React.render root(), mount
+ReactDOM.render root(), mount

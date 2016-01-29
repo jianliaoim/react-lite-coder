@@ -1,6 +1,7 @@
 cx = require 'classnames'
 hljs = require 'highlight.js/lib/highlight'
-React = require 'react/addons'
+React = require 'react'
+PureRenderMixin = require 'react-addons-pure-render-mixin'
 
 code = React.createFactory 'code'
 div = React.createFactory 'div'
@@ -13,7 +14,7 @@ lengthLimit = 100 * 1000
 
 module.exports = React.createClass
   displayName: 'lite-code-viewer'
-  mixins: [React.addons.PureRenderMixin]
+  mixins: [PureRenderMixin]
 
   propTypes:
     codeType: T.string

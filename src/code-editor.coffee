@@ -50,7 +50,7 @@ module.exports = React.createClass
       extraKeys:
         'Tab': (cm) ->
           cm.replaceSelection '  ', 'end'
-    editor = @refs.editor.getDOMNode()
+    editor = @refs.editor
     @editor = codemirror.fromTextArea editor, @option
     @editor.on 'change', @onEditorChange
 
